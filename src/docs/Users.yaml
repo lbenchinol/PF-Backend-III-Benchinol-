@@ -1,0 +1,240 @@
+paths:
+  /api/users/:
+    get:
+      summary: Obtiene todos los users
+      tags: 
+        - Users
+      responses:
+        '200':
+          description: success
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+    post:
+      summary: Crea un user
+      tags:
+        - Users
+      responses:
+        '200':
+          description: success
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+        '400':
+          description: failed - duplicated user
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+  /api/users/<UID>:
+    get:
+      summary: Obtiene user by ID
+      tags:
+        - Users
+      responses:
+        '200':
+          description: success
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+        '404':
+          description: failed - Not found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+    put:
+      summary: Modifica user by ID
+      tags:
+        - Users
+      responses:
+        '200':
+          description: success
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+        '404':
+          description: failed - Not found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+    delete:
+      summary: Elimina user by ID
+      tags:
+        - Users
+      responses:
+        '200':
+          description: success
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string
+        '404':
+          description: failed - Not found
+          headers:
+            X-Powered-By:
+              schema:
+                type: string
+            Content-Length:
+              schema:
+                type: integer
+            ETag:
+              schema:
+                type: string
+            Date:
+              schema:
+                type: string
+            Connection:
+              schema:
+                type: string
+            Keep-Alive:
+              schema:
+                type: string

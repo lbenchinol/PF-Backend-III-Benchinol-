@@ -28,22 +28,22 @@ describe("Test Router Adoption", function () {
         petNotAdoptedMock = await mocksController.generatePet();
         petNotAdoptedMock.specie = 'test';
 
-        fetch("http://localhost:8080/api/users/", {
+        await fetch("http://localhost:8080/api/users/", {
             method: "POST",
             body: userMock
         });
 
-        fetch("http://localhost:8080/api/pets/", {
+        await fetch("http://localhost:8080/api/pets/", {
             method: "POST",
             body: petAdoptedMock
         });
 
-        fetch("http://localhost:8080/api/pets/", {
+        await fetch("http://localhost:8080/api/pets/", {
             method: "POST",
             body: pet2AdoptedMock
         });
 
-        fetch("http://localhost:8080/api/pets/", {
+        await fetch("http://localhost:8080/api/pets/", {
             method: "POST",
             body: petNotAdoptedMock
         });

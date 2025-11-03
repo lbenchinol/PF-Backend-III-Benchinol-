@@ -11,6 +11,17 @@ const getAllPets = async (req, res) => {
     }
 }
 
+const getPet = async (req, res) => {
+    try {
+        const petId = req.params.pid;
+        const pet = await petsService.getBy({_id:petId});
+        if(!pet) return res.status(404).send({status:"error",error:"Pet not found"});
+        res.send({ status: "success", payload: pet });
+    } catch (error) {
+        res.status(500).send({ status: "error", error: "Could not get pet" });
+    }
+}
+
 const createPet = async (req, res) => {
     try {
         const { name, specie, birthDate } = req.body;
@@ -65,6 +76,7 @@ const createPetWithImage = async (req, res) => {
 }
 export default {
     getAllPets,
+    getPet,
     createPet,
     updatePet,
     deletePet,
