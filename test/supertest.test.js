@@ -97,23 +97,23 @@ describe("Test Router Adoption", function () {
 
     //  ----------  createAdoption
     it('El método POST /api/adoptions/:uid/:pid si lo datos son correctos, retorna un objeto con la propiedad status igual a success', async () => {
-        const { body } = await requester.get(`/api/adoptions/${userMock._id}/${petNotAdoptedMock._id}`);
+        const { body } = await requester.post(`/api/adoptions/${userMock._id}/${petNotAdoptedMock._id}`);
         expect(body).to.has.property('status').to.be.eq('success');
     });
 
 
     it('El método POST /api/adoptions/:uid/:pid envía UID erróneo, retorna un objeto con la propiedad status igual HTTP 404', async () => {
-        const { statusCode } = await requester.get(`/api/adoptions/UIDErroneo/${petNotAdoptedMock._id}`);
+        const { statusCode } = await requester.post(`/api/adoptions/UIDErroneo/${petNotAdoptedMock._id}`);
         expect(statusCode).to.be.eq(404);
     });
 
     it('El método POST /api/adoptions/:uid/:pid envía PID erróneo, retorna un objeto con la propiedad status igual HTTP 404', async () => {
-        const { statusCode } = await requester.get(`/api/adoptions/${userMock._id}/PIDErroneo`);
+        const { statusCode } = await requester.post(`/api/adoptions/${userMock._id}/PIDErroneo`);
         expect(statusCode).to.be.eq(404);
     });
 
     it('El método POST /api/adoptions/:uid/:pid envía PID adoptado, retorna un objeto con la propiedad status igual HTTP 400', async () => {
-        const { statusCode } = await requester.get(`/api/adoptions/${userMock._id}/${petAdoptedMock._id}`);
+        const { statusCode } = await requester.post(`/api/adoptions/${userMock._id}/${petAdoptedMock._id}`);
         expect(statusCode).to.be.eq(400);
     });
 
