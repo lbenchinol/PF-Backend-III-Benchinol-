@@ -6,11 +6,8 @@ paths:
         - Users
       responses:
         '200':
-          description: success
+          description: Obtiene todos los users existentes
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -32,11 +29,8 @@ paths:
         - Users
       responses:
         '200':
-          description: success
+          description: Crea un user con los datos first_name, last_name, email, password
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -53,11 +47,8 @@ paths:
               schema:
                 type: string
         '400':
-          description: failed - duplicated user
+          description: Crea un user con email ya registrado
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -95,11 +86,8 @@ paths:
         - Users
       responses:
         '200':
-          description: success
+          description: Obtiene datos de un user buscado por ID
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -116,11 +104,8 @@ paths:
               schema:
                 type: string
         '404':
-          description: failed - Not found
+          description: Fallo al buscar un user por un ID inválido
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -142,11 +127,8 @@ paths:
         - Users
       responses:
         '200':
-          description: success
+          description: Modifica datos de un user buscado por ID
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -163,11 +145,8 @@ paths:
               schema:
                 type: string
         '404':
-          description: failed - Not found
+          description: Fallo al buscar user con ID inválido cuando se intenta modificarlo
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -197,11 +176,8 @@ paths:
         - Users
       responses:
         '200':
-          description: success
+          description: Elimina un user buscado por ID
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
@@ -218,11 +194,8 @@ paths:
               schema:
                 type: string
         '404':
-          description: failed - Not found
+          description: Fallo al intentar buscar por ID inválido cuando se intentaba eliminarlo
           headers:
-            X-Powered-By:
-              schema:
-                type: string
             Content-Length:
               schema:
                 type: integer
