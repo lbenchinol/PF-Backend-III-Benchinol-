@@ -55,7 +55,7 @@ const createUser = async (req, res) => {
         const passwordEncrypted = bcrypt.hashSync(password, 10);
         const user = { first_name, last_name, email, password: passwordEncrypted, role };
         const result = await usersService.create(user);
-        res.send({ status: "success", payload: result });
+        res.status(201).send({ status: "success", payload: result });
     } catch (error) {
         res.status(500).send({ status: "error", error: "Could not create user" });
     }

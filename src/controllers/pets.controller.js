@@ -28,7 +28,7 @@ const createPet = async (req, res) => {
         if (!name || !specie || !birthDate) return res.status(400).send({ status: "error", error: "Incomplete values" })
         const pet = PetDTO.getPetInputFrom({ name, specie, birthDate });
         const result = await petsService.create(pet);
-        res.send({ status: "success", payload: result });
+        res.status(201).send({ status: "success", payload: result });
     } catch (error) {
         res.status(500).send({ status: "error", error: "Could not create pet" });
     }

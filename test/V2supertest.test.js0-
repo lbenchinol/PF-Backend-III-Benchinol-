@@ -1,0 +1,133 @@
+import { describe, it } from "mocha"
+import { expect } from "chai"
+import mongoose from "mongoose"
+import supertest from "supertest"
+
+try {
+    await mongoose.connect('mongodb://localhost:27017/Coder-Adoptme');
+} catch (error) {
+    console.log('Error al conectar con la DB');
+}
+
+const requester = supertest("http://localhost:8080");
+
+describe("Test Router Adoption", function () {
+
+    let userMock;
+    let petAdoptedMock;
+    let pet2AdoptedMock;
+    let petNotAdoptedMock;
+
+    before(async () => {
+        const userResponse = await requester.get('/api/mocks/mockingusers');
+        let userResp = userResponse.body.payload[0];
+        delete userResp._id;
+        delete userResp.role;
+        delete userResp.pets;
+        userResp.last_name = 'test';
+        userResp.password = 'password123';
+        userResp = await requester.post("/api/users").send(userResp);
+        userMock = userResp.body.payload;
+
+        const petResponse1 = await requester.get('/api/mocks/mockingpets');
+        let petResp1 = petResponse1.body.payload[0];
+        delete petResp1._id;
+        petResp1.specie = 'test';
+        petResp1 = await requester.post("/api/pets").send(petResp1);
+        petAdoptedMock = petResp1.body.payload;
+        petAdoptedMock.adopted = true;
+        //  MANDAR _id POR PARAMS
+        await requester.put("/api/pets").send(petAdoptedMock._id, petAdoptedMock);
+
+        const petResponse2 = await requester.get('/api/mocks/mockingpets');
+        let petResp2 = petResponse2.body.payload[0];
+        delete petResp2._id;
+        petResp2.specie = 'test';
+        petResp2 = await requester.post("/api/pets").send(petResp2);
+        pet2AdoptedMock = petResp2.body.payload;
+        pet2AdoptedMock.adopted = true;
+        //  MANDAR _id POR PARAMS
+        await requester.put("/api/pets").send(pet2AdoptedMock._id, pet2AdoptedMock);
+
+        const petResponse3 = await requester.get('/api/mocks/mockingpets');
+        let petResp3 = petResponse3.body.payload[0];
+        delete petResp3._id;
+        petResp3.specie = 'test';
+        petResp3 = await requester.post("/api/pets").send(petResp3);
+        petNotAdoptedMock = petResp3.body.payload;
+    });
+
+    /* after(async () => {
+        const user = await mongoose.connection.collection("users").findOne({ email: 'lucastest@gmail.com' });
+        await mongoose.connection.collection("users").deleteMany({ last_name: "test" });
+        await mongoose.connection.collection("pets").deleteMany({ specie: "test" });
+        await mongoose.connection.collection("adoptions").deleteMany({ owner: user._id });
+    }); */
+
+
+    it('test test test', async () => {
+
+    });
+
+
+    /* //  ----------  getAllAdoptions
+    it('El método GET /api/adoptions retorna un objeto con la propiedad payload conteniendo a todas las adopciones', async () => {
+        const { body } = await requester.get('/api/adoption');
+        expect(body.payload[0]._id).to.be.eq(petAdoptedMock._id);
+        expect(body.payload[1]._id).to.be.eq(pet2AdoptedMock._id);
+    }); */
+    /*
+    it('El método GET /api/adoptions retorna un objeto con la propiedad payload de tipo array', async () => {
+        const { body } = await requester.get("/api/adoptions");
+        expect(Array.isArray(body.payload)).to.be.true;
+    });
+
+    it('El método GET /api/adoptions retorna un objeto con la propiedad status igual a success', async () => {
+        const { body } = await requester.get("/api/adoptions");
+        expect(body).to.has.property('status').to.be.eq('success');
+    });
+
+
+    //  ----------  getAdoption
+    it('El método GET /api/adoptions/:aid retorna un objeto con la propiedad payload conteniendo a la adopción solicitada', async () => {
+        const { body } = await requester.get(`/api/adoptions/${petAdoptedMock._id}`);
+        expect(body.payload[0]._id).to.be.eq(petAdoptedMock._id);
+        expect(body.payload[0].name).to.be.eq(petAdoptedMock.name);
+        expect(body.payload[0].specie).to.be.eq(petAdoptedMock.specie);
+        expect(body.payload[0].birthDate).to.be.eq(petAdoptedMock.birthDate);
+    });
+
+    it('El método GET /api/adoptions/:aid retorna un objeto con la propiedad status igual a success', async () => {
+        const { body } = await requester.get(`/api/adoptions/${petAdoptedMock._id}`);
+        expect(body).to.has.property('status').to.be.eq('success');
+    });
+
+    it('El método GET /api/adoptions/:aid envía AID erróneo, retorna un objeto con la propiedad status HTTP 404', async () => {
+        const { statusCode } = await requester.get(`/api/adoptions/AIDErroneo`);
+        expect(statusCode).to.be.eq(404);
+    });
+
+
+    //  ----------  createAdoption
+    it('El método POST /api/adoptions/:uid/:pid si lo datos son correctos, retorna un objeto con la propiedad status igual a success', async () => {
+        const { body } = await requester.post(`/api/adoptions/${userMock._id}/${petNotAdoptedMock._id}`);
+        expect(body).to.has.property('status').to.be.eq('success');
+    });
+
+
+    it('El método POST /api/adoptions/:uid/:pid envía UID erróneo, retorna un objeto con la propiedad status igual HTTP 404', async () => {
+        const { statusCode } = await requester.post(`/api/adoptions/UIDErroneo/${petNotAdoptedMock._id}`);
+        expect(statusCode).to.be.eq(404);
+    });
+
+    it('El método POST /api/adoptions/:uid/:pid envía PID erróneo, retorna un objeto con la propiedad status igual HTTP 404', async () => {
+        const { statusCode } = await requester.post(`/api/adoptions/${userMock._id}/PIDErroneo`);
+        expect(statusCode).to.be.eq(404);
+    });
+
+    it('El método POST /api/adoptions/:uid/:pid envía PID adoptado, retorna un objeto con la propiedad status igual HTTP 400', async () => {
+        const { statusCode } = await requester.post(`/api/adoptions/${userMock._id}/${petAdoptedMock._id}`);
+        expect(statusCode).to.be.eq(400);
+    }); */
+
+});

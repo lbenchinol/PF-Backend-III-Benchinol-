@@ -1,6 +1,5 @@
 import userModel from "./models/User.js";
 
-
 export default class Users {
     
     get = (params) =>{
