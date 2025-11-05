@@ -3,6 +3,8 @@ import { expect } from "chai"
 import mongoose from "mongoose"
 import supertest from "supertest"
 
+import { connnectMongoDB } from '../src/db/mongodb.js';
+
 import mocksController from '../src/controllers/mocks.controller.js';
 import usersController from '../src/controllers/users.controller.js';
 import petsController from '../src/controllers/pets.controller.js';
@@ -10,7 +12,7 @@ import adoptionsController from '../src/controllers/adoptions.controller.js';
 import adoptionModel from '../src/dao/models/Adoption.js';
 
 try {
-    await mongoose.connect('mongodb://localhost:27017/Coder-Adoptme');
+    connnectMongoDB();
 } catch (error) {
     console.log('Error al conectar con la DB');
 }
