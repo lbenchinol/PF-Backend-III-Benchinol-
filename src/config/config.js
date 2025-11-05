@@ -1,3 +1,7 @@
+import dotenv from 'dotenv'
+
+dotenv.config({ path: './.env', override: true });
+
 export default {
     port: process.env.PORT || 8080,
     db: {

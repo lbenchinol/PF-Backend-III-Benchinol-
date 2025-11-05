@@ -2,11 +2,11 @@
   "name": "pf-backend3-benchinol-lucas",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config .",
-    "dev": "nodemon --exec node -r dotenv/config .",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
     "test": "mocha test/supertest.test.js"
   },
   "keywords": [],
